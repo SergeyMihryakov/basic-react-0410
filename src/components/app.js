@@ -4,6 +4,7 @@ import Select from 'react-select'
 import ArticleList from './article-list'
 import ArticleChart from './articles-chart'
 import UserForm from './user-form'
+import DaysRangeForm from './days-range-form'
 import articles from '../fixtures'
 
 class App extends Component {
@@ -14,6 +15,7 @@ class App extends Component {
     return (
       <div>
         <UserForm />
+        <DaysRangeForm />
         <Select
           options={this.options}
           value={this.state.selected}
