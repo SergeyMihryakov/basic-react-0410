@@ -1,19 +1,15 @@
 import React, { PureComponent } from 'react'
+import toggleDecorator from '../decorators/toggle'
 
 class Comments extends PureComponent {
-  state = {
-    isOpen: true
-  }
-
-  toggleOpen = () => this.setState({ isOpen: !this.state.isOpen })
-
   render() {
-    const { isOpen } = this.state
-    const buttonText = (isOpen ? 'Close' : 'Open') + ' comments'
+    const { isOpen, toggleOpen } = this.props
+    const buttonText = `${isOpen ? 'Close' : 'Open'} comments`
+
     return (
       <div>
         <h5>
-          Комментарии <button onClick={this.toggleOpen}>{buttonText}</button>
+          Комментарии <button onClick={toggleOpen}>{buttonText}</button>
         </h5>
         {this.items}
       </div>
@@ -21,26 +17,25 @@ class Comments extends PureComponent {
   }
 
   get items() {
-    const { comments } = this.props
-    const { isOpen } = this.state
+    const { comments, isOpen } = this.props
 
     if (!isOpen) return null
 
-    if (comments) {
-      return (
-        <ul>
-          {comments.map((comment) => (
-            <li key={comment.id}>
-              <h4>{comment.user}</h4>
-              {comment.text}
-            </li>
-          ))}
-        </ul>
-      )
+    if (!comments) {
+      return <p>Комментариев нет.</p>
     }
 
-    return <p>Комментариев нет.</p>
+    return (
+      <ul>
+        {comments.map((comment) => (
+          <li key={comment.id}>
+            <h4>{comment.user}</h4>
+            {comment.text}
+          </li>
+        ))}
+      </ul>
+    )
   }
 }
 
-export default Comments
+export default toggleDecorator(Comments)
