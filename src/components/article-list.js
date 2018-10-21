@@ -39,6 +39,28 @@ export class ArticleList extends Component {
 
 const ArticleListWithAccordion = accordionDecorator(ArticleList)
 
+const filterArticle = (state) => {
+  return state.articles.filter((article) => {
+    const { selected, dateRange } = state.filter
+
+    if (
+      selected &&
+      selected.length &&
+      selected.map((item) => item.value).indexOf(article.id) === -1
+    ) {
+      return false
+    }
+
+    const articleDate = new Date(article.date)
+
+    if (dateRange.from && articleDate <= dateRange.from) {
+      return false
+    }
+
+    return !(dateRange.to && articleDate >= dateRange.to)
+  })
+}
+
 export default connect((state) => ({
-  articles: state.articles
+  articles: filterArticle(state)
 }))(ArticleListWithAccordion)
