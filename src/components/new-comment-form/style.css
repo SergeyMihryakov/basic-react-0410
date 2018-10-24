@@ -1,0 +1,24 @@
+.new-comment-form__container {
+	border: 1px solid gray;
+	margin-top: 15px;
+	padding: 20px 15px;
+	width: 500px;
+}
+
+.new-comment-form__user {
+	margin-bottom: 10px;
+}
+
+.new-comment-form__user label {
+	margin-right: 10px;
+}
+
+.new-comment-form__text textarea {
+	width: 100%;
+	height: 50px;
+}
+
+.new-comment-form__button {
+	margin-top: 10px;
+	text-align: right;
+}
