@@ -1,7 +1,12 @@
 import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import './style.css'
 
 class NewCommentForm extends PureComponent {
+  static propTypes = {
+    onSendComment: PropTypes.func
+  }
+
   state = {
     user: '',
     text: ''
@@ -41,12 +46,10 @@ class NewCommentForm extends PureComponent {
 
   handleSubmit = (ev) => {
     ev.preventDefault()
-    console.log(
-      '---',
-      'submit new comment form',
-      this.state.user,
-      this.state.text
-    )
+
+    const { onSendComment } = this.props
+
+    onSendComment && onSendComment(this.state.user, this.state.text)
   }
 }
 

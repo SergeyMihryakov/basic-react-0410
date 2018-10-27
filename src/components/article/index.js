@@ -3,12 +3,13 @@ import CSSTransition from 'react-addons-css-transition-group'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import CommentList from '../comment-list'
-import { deleteArticle } from '../../ac'
+import { deleteArticle, createCommentToArticle } from '../../ac'
 import './style.css'
 
 class Article extends PureComponent {
   static propTypes = {
     article: PropTypes.shape({
+      id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       text: PropTypes.string,
       comments: PropTypes.array
@@ -56,6 +57,11 @@ class Article extends PureComponent {
 
   handleClick = () => this.props.toggleOpen(this.props.article.id)
 
+  handleCreateComment = (user, text) => {
+    const { createCommentToArticle, article } = this.props
+    createCommentToArticle(article.id, user, text)
+  }
+
   get body() {
     const { isOpen, article } = this.props
     if (!isOpen) return null
@@ -64,7 +70,10 @@ class Article extends PureComponent {
     return (
       <section className="test--article__body">
         {article.text}
-        <CommentList comments={article.comments} />
+        <CommentList
+          comments={article.comments}
+          onCreateComment={this.handleCreateComment}
+        />
       </section>
     )
   }
@@ -72,5 +81,5 @@ class Article extends PureComponent {
 
 export default connect(
   null,
-  { deleteArticle }
+  { deleteArticle, createCommentToArticle }
 )(Article)

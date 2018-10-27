@@ -9,6 +9,7 @@ import './style.css'
 class CommentList extends Component {
   static propTypes = {
     comments: PropTypes.array,
+    onCreateComment: PropTypes.func,
     //from toggleOpen decorator
     isOpen: PropTypes.bool,
     toggleOpen: PropTypes.func
@@ -50,7 +51,7 @@ class CommentList extends Component {
         ) : (
           <h3 className="test--comment-list__empty">No comments yet</h3>
         )}
-        <NewCommentForm />
+        <NewCommentForm onSendComment={this.handleSendComment} />
       </div>
     )
   }
@@ -65,6 +66,11 @@ class CommentList extends Component {
         ))}
       </ul>
     )
+  }
+
+  handleSendComment = (user, text) => {
+    const { onCreateComment } = this.props
+    onCreateComment && onCreateComment(user, text)
   }
 }
 
