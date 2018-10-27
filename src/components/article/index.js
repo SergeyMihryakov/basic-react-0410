@@ -10,7 +10,8 @@ class Article extends PureComponent {
   static propTypes = {
     article: PropTypes.shape({
       title: PropTypes.string.isRequired,
-      text: PropTypes.string
+      text: PropTypes.string,
+      comments: PropTypes.array
     }).isRequired,
     isOpen: PropTypes.bool,
     toggleOpen: PropTypes.func.isRequired

@@ -14,14 +14,20 @@ export const filtratedArticlesSelector = createSelector(
     console.log('---', 'article list selector')
     const { from, to } = dateRange
 
-    return articles.filter((article) => {
-      const published = Date.parse(article.date)
-      return (
+    const outputArticles = {}
+
+    for (let id in articles) {
+      const published = Date.parse(articles[id].date)
+
+      if (
         (!selected.length ||
-          selected.find((selected) => selected.value === article.id)) &&
+          selected.find((selected) => selected.value === id)) &&
         (!from || !to || (published > from && published < to))
-      )
-    })
+      ) {
+        outputArticles[id] = articles[id]
+      }
+    }
+    return outputArticles
   }
 )
 
